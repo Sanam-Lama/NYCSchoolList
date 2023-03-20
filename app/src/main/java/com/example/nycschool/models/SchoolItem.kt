@@ -1,5 +1,14 @@
 package com.example.nycschool.models
 
+/**
+ * kotlin data classes can contain only 127 args. so if the data class contains more
+ * than 127 arguments to it then the data will not load. So always make sure to check
+ * how big your data is in the api that we are calling
+ *
+ * Error it shows if data class has more than 127 arguments: Unable to invoke no-args constructor for class ABC.
+ * Registering an InstanceCreator with Gson for this type may fix this problem
+ */
+
 data class SchoolItem(
     val academicopportunities1: String,
     val academicopportunities2: String,

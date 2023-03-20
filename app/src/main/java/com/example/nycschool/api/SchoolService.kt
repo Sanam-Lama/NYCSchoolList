@@ -16,6 +16,11 @@ import retrofit2.http.GET
 
 interface SchoolService {
 
+    /**
+     * response type should be <List<SchoolItem>> because the data class School is
+     * already a list of schoolItem.
+     */
+
     @GET("resource/s3k6-pzi2")
     suspend fun getSchools() : Response<List<SchoolItem>>
 }

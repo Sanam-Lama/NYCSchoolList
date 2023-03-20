@@ -12,6 +12,7 @@ class SchoolViewModel(private val schoolRepository: SchoolRepository) : ViewMode
     val schoolData: LiveData<List<SchoolItem>>
         get() = schoolRepository.schoolLiveData
 
+    //viewModelScope helps us keep the coroutine alive only until the viewmodel is alive
     fun getSchools() {
         viewModelScope.launch {
             schoolRepository.getSchools()
