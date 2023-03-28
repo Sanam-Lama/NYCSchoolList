@@ -1,13 +1,12 @@
 package com.example.nycschool.ui.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,7 +58,10 @@ class SchoolFragment : Fragment() {
                 }
             }
         })
-        viewModel.getSchools()
+        viewModel.getSchools(1, 20)
+//        val state = viewModel.state
+//        val lazyListState = rememberLazyListState()
+
     }
 
     /**

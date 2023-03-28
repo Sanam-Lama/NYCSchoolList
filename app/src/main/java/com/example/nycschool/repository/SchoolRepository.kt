@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.nycschool.api.SchoolService
 import com.example.nycschool.models.SchoolItem
+import kotlinx.coroutines.delay
 
 /**
  * This is the repository class for this project where we add the methods for network calls.
@@ -20,10 +21,31 @@ class SchoolRepository(private val schoolService: SchoolService) {
     val schoolLiveData: LiveData<List<SchoolItem>>
         get() = _schoolLiveData
 
-    suspend fun getSchools() {
-        val result = schoolService.getSchools()
-        if (result.body() != null) {
-            _schoolLiveData.postValue(result.body())
-        }
+//    suspend fun getSchools() {
+//        val result = schoolService.getSchools()
+//        if (result.body() != null) {
+//            _schoolLiveData.postValue(result.body())
+//        }
+//    }
+
+    suspend fun getSchools(page: Int, pageSize: Int): Result<List<SchoolItem>> {
+        delay(2000L)
+//        val pageInt = page.toInt()
+        val startingIndex = page * pageSize
+        return if (startingIndex + pageSize <= remoteDataSource.size) {
+            Result.success(
+                remoteDataSource.slice(startingIndex until startingIndex + pageSize)
+            )
+        } else Result.success(emptyList())
+    }
+
+    /**
+     * we want to paginate 100 items from the api
+     */
+    private val remoteDataSource = (1..100).map {
+        SchoolItem(
+            dbn = "DBN $it",
+            school_name = "School Name $it"
+        )
     }
 }

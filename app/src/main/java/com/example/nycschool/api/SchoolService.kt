@@ -22,5 +22,6 @@ interface SchoolService {
      */
 
     @GET("resource/s3k6-pzi2")
-    suspend fun getSchools() : Response<List<SchoolItem>>
+//    suspend fun getSchools() : Response<List<SchoolItem>>
+    suspend fun getSchools() : Result<List<SchoolItem>>
 }

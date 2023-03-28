@@ -23,4 +23,8 @@ object RetrofitHelper {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
+
+//    fun getSchoolApi(retrofit: Retrofit): SchoolService {
+//        return retrofit.create(SchoolService::class.java)
+//    }
 }

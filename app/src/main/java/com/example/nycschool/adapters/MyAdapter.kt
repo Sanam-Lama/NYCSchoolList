@@ -25,7 +25,8 @@ class MyAdapter(private val schoolList: List<SchoolItem>): RecyclerView.Adapter<
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val school = schoolList[position]
         holder.binding.schoolName.text = school.school_name
-        holder.binding.schoolName.setOnClickListener {
+        holder.binding.dbn.text = school.dbn
+        holder.binding.root.setOnClickListener {
             onItemClick?.invoke(school)
         }
     }
