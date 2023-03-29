@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.nycschool.api.SchoolService
 import com.example.nycschool.models.SchoolItem
+import javax.inject.Inject
 
 /**
  * This is the repository class for this project where we add the methods for network calls.
@@ -11,9 +12,12 @@ import com.example.nycschool.models.SchoolItem
  * coming from the network.
  *
  * ViewModel will call the methods in here and get the required data from the call
+ *
+ * @Inject constructor: we are making a constructor injection where Dagger will create an
+ * object of api(SchoolService) for us
  */
 
-class SchoolRepository(private val schoolService: SchoolService) {
+class SchoolRepository @Inject constructor(private val schoolService: SchoolService) {
 
     private val _schoolLiveData = MutableLiveData<List<SchoolItem>>()
 
@@ -22,7 +26,7 @@ class SchoolRepository(private val schoolService: SchoolService) {
 
     suspend fun getSchools() {
         val result = schoolService.getSchools()
-        if (result.body() != null) {
+        if (result.isSuccessful && result.body() != null) {
             _schoolLiveData.postValue(result.body())
         }
     }

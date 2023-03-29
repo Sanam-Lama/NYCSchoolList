@@ -7,6 +7,10 @@ import com.example.nycschool.models.SchoolItem
 import com.example.nycschool.repository.SchoolRepository
 import kotlinx.coroutines.launch
 
+/**
+ * We cannot apply a constructor injection here for viewmodel because the object for repository
+ * is provided viewmodel factory
+ */
 class SchoolViewModel(private val schoolRepository: SchoolRepository) : ViewModel() {
 
     val schoolData: LiveData<List<SchoolItem>>
