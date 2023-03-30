@@ -1,26 +1,23 @@
 package com.example.nycschool.ui.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nycschool.R
 import com.example.nycschool.adapters.MyAdapter
-import com.example.nycschool.api.RetrofitHelper
-import com.example.nycschool.api.SchoolService
 import com.example.nycschool.databinding.FragmentSchoolBinding
 import com.example.nycschool.models.SatResultsItem
-import com.example.nycschool.repository.SchoolRepository
 import com.example.nycschool.ui.viewmodels.SchoolViewModel
-import com.example.nycschool.ui.viewmodels.SchoolViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SchoolFragment : Fragment() {
     private var _binding: FragmentSchoolBinding? = null
     private val binding get() = _binding!!
@@ -39,11 +36,15 @@ class SchoolFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //creating an instance of repository to initialize viewmodel
-        val schoolService = RetrofitHelper.getInstance().create(SchoolService::class.java)
-        val repository = SchoolRepository(schoolService)
+        /**
+         * when we make use of @HiltViewModel in viewmodel class, @Inject will create an object for us so we will
+         * not have to add viewmodelFactory when initializing viewmodel here
+         *
+         * viewModel = ViewModelProvider(this, SchoolViewModelFactory(repository))[SchoolViewModel::class.java]
+         * it can be written as below assuming that there isn't any parameter in the viewmodel
+         */
 
-        viewModel = ViewModelProvider(this, SchoolViewModelFactory(repository))[SchoolViewModel::class.java]
+        viewModel = ViewModelProvider(this)[SchoolViewModel::class.java]
         viewModel.schoolData.observe(viewLifecycleOwner, Observer { schools ->
             binding.recyclerView.also {
                 it.layoutManager = LinearLayoutManager(requireContext())

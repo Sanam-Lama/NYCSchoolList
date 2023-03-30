@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.nycschool.api.SchoolService
 import com.example.nycschool.models.SchoolItem
+import javax.inject.Inject
 
 /**
  * This is the repository class for this project where we add the methods for network calls.
@@ -13,7 +14,7 @@ import com.example.nycschool.models.SchoolItem
  * ViewModel will call the methods in here and get the required data from the call
  */
 
-class SchoolRepository(private val schoolService: SchoolService) {
+class SchoolRepository @Inject constructor(private val schoolService: SchoolService) {
 
     private val _schoolLiveData = MutableLiveData<List<SchoolItem>>()
 
